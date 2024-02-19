@@ -12,10 +12,68 @@ import {
   cilPuzzle,
   cilSpeedometer,
   cilStar,
+  cilBook,
+  cilAmericanFootball,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
 const _nav = [
+  {
+    component: CNavTitle,
+    name: 'Repartitions',
+  },
+  {
+    component: CNavItem,
+    name: 'Vacataires',
+    to: '/theme/colors',
+    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'PER',
+    to: '/theme/typography',
+    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Repartitions',
+    to: '/theme/typography',
+    icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavTitle,
+    name: 'emplois',
+  },
+  {
+    component: CNavItem,
+    name: 'Deroulement',
+    to: '/theme/typography',
+    icon: <CIcon icon={cilBook} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Seances',
+    to: '/theme/typography',
+    icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Salles',
+    to: '/theme/typography',
+    icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Batiments',
+    to: '/theme/typography',
+    icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Emplois',
+    to: '/theme/typography',
+    icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
+  },
   // {
   //   component: CNavItem,
   //   name: 'Dashboard',
@@ -25,22 +83,6 @@ const _nav = [
   //     color: 'info',
   //     text: 'NEW',
   //   },
-  // },
-  // {
-  //   component: CNavTitle,
-  //   name: 'Theme',
-  // },
-  // {
-  //   component: CNavItem,
-  //   name: 'Colors',
-  //   to: '/theme/colors',
-  //   icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
-  // },
-  // {
-  //   component: CNavItem,
-  //   name: 'Typography',
-  //   to: '/theme/typography',
-  //   icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   // },
   // {
   //   component: CNavTitle,

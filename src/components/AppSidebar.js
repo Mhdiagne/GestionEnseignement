@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import {
   CCloseButton,
+  CImage,
   CSidebar,
   CSidebarBrand,
   CSidebarFooter,
@@ -14,7 +15,7 @@ import CIcon from '@coreui/icons-react'
 
 import { AppSidebarNav } from './AppSidebarNav'
 
-import { logo } from 'src/assets/brand/logo'
+import logo from 'src/assets/logos/Logo_uasz-bg-transparent.png'
 import { sygnet } from 'src/assets/brand/sygnet'
 
 import SimpleBar from 'simplebar-react'
@@ -41,8 +42,10 @@ const AppSidebar = () => {
     >
       <CSidebarHeader className="border-bottom">
         <CSidebarBrand to="/">
-          <CIcon customClassName="sidebar-brand-full" icon={logo} height={32} />
-          <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} />
+          <CImage rounded src={logo} width={60} height={60} />
+          <p className='text-center text-header sidebar-brand-full uasz-color-vert-1'>UFR-ST</p>
+          {/* <CIcon customClassName="sidebar-brand-full"  height={32} />
+          <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} /> */}
         </CSidebarBrand>
         <CCloseButton
           className="d-lg-none"

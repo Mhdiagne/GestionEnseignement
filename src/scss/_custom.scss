@@ -1,1 +1,64 @@
 // Here you can add other styles
+// Here you can add other styles
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
+
+
+body{
+    font-family: "Poppins";
+}
+
+.sidebar-header {
+    background-color: white;
+    padding: 0;
+}
+
+.text-header {
+   font-size: 24px;
+   font-weight: 700;
+}
+
+.sidebar-brand {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.sidebar{
+    border-width: 0 !important;
+}
+
+.header {
+    --#{$prefix}header-color: #053229;
+    background-color: white !important;
+}
+
+// div.container-fluid:nth-child(1) {
+//     background-color: white !important;
+    
+// }
+
+.breadcrumb-item {
+    color: black !important;
+}
+
+.breadcrumb {
+    --#{$prefix}breadcrumb-divider-color: black;
+}
+
+.nav-hover:hover {
+    color: gray !important;
+}
+
+
+.footer {
+    background-color: #113f36 !important;
+}
+
+.body {
+    background-color: white !important;
+}
+
+div.container-fluid:nth-child(2) {
+    border-top: #113f36;
+    border-bottom: #113f36;
+}

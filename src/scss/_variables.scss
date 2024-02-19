@@ -3,3 +3,67 @@
 // If you want to customize your project please add your variables below.
 
 $enable-deprecation-messages: false !default;
+
+$uasz-vert-1:                  #113f36 !default;
+$uasz-vert-2:                  #1B9A76 !default;
+$uasz-vert-3:                  #97bf0d !default;
+$uasz-blanc:                   #ffff !default;
+
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
+
+
+body{
+    font-family: "Poppins";
+}
+
+.bg-uasz-vert-1{
+    background-color: $uasz-vert-1 !important;
+}
+
+.btn.btn-uasz-1{
+    background-color: $uasz-vert-1 !important;
+    color: white !important;
+}
+
+.btn.btn-uasz-2{
+    background-color: $uasz-vert-2 !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+.btn.btn-uasz-3{
+    background-color: $uasz-vert-3 !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+.bg-uasz-vert-2{
+    background-color: $uasz-vert-2 !important;
+}
+
+.bg-uasz-vert-3{
+    background-color: $uasz-vert-3 !important;
+}
+
+.uasz-color-blanc{
+    color: $uasz-blanc !important;
+}
+
+.uasz-color-vert-1{
+    color: $uasz-vert-1 !important;
+}
+
+.uasz-color-vert-2{
+    color: $uasz-vert-2 !important;
+}
+
+.uasz-color-vert-3{
+    color: $uasz-vert-3 !important;
+}
+.text-center {
+    text-align: center !important;
+}
+
+.sidebar-dark {
+    background-color: #113f36 !important;
+}
