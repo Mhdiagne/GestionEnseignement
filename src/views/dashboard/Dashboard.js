@@ -53,6 +53,8 @@ import avatar6 from 'src/assets/images/avatars/6.jpg'
 import WidgetsBrand from '../widgets/WidgetsBrand'
 import WidgetsDropdown from '../widgets/WidgetsDropdown'
 import MainChart from './MainChart'
+import Vacataires from 'src/components/tables/Vacataire'
+import Repartitions from 'src/components/tables/Repartitions'
 
 const Dashboard = () => {
   // const progressExample = [
@@ -178,8 +180,9 @@ const Dashboard = () => {
 
   return (
     <>
+      <Repartitions />
       {/*<Vacataires />
-       <WidgetsDropdown className="mb-4" />
+      <WidgetsDropdown className="mb-4" />
       <CCard className="mb-4">
         <CCardBody>
           <CRow>

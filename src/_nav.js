@@ -37,7 +37,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Repartitions',
-    to: '/theme/typography',
+    to: '/dashboard/repartition',
     icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
   },
   {

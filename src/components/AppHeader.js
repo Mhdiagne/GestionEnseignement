@@ -51,6 +51,7 @@ const AppHeader = () => {
         >
           <CIcon icon={cilMenu} size="xl" className='text-dark' />
         </CHeaderToggler>
+        
         {/* <CHeaderNav className="d-none d-md-flex">
           <CNavItem>
             <CNavLink to="/dashboard" className='nav-hover' component={NavLink}>
@@ -131,9 +132,9 @@ const AppHeader = () => {
           <AppHeaderDropdown />
         </CHeaderNav>
       </CContainer>
-      <CContainer className="px-4 " fluid>
+      {/* <CContainer className="px-4 " fluid>
         <AppBreadcrumb />
-      </CContainer>
+      </CContainer> */}
     </CHeader>
   )
 }

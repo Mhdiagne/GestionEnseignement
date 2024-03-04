@@ -1,45 +1,31 @@
 import { cilPencil, cilPlus, cilSave, cilTrash, cilX } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
-import { CModal } from '@coreui/react';
-import { CInputGroup } from '@coreui/react';
-import { CFormInput } from '@coreui/react';
-import { CButton, CModalBody, CModalHeader, CModalTitle, CModalFooter } from '@coreui/react';
+import { CButton, CFormInput, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
 import { Box } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import { SERVER_URL } from 'src/_constantes';
+import DetailRepartirions from './detailRepartirions';
 
-
-const Vacataires = () => {
+const Repartitions = () => {
 
     const [visible, setVisible] = useState(false)
     const [visible1, setVisible1] = useState(false)
     const [idSelected, setIdSelected] = useState(0);
+    const [show, setShow] = useState(false);
     const columns = [
-        { field: 'id_Enseignant', headerName: 'ID', width: 90 },
+        { field: 'id_Repartition', headerName: 'ID', width: 90 },
         {
-        field: 'prenom',
-        headerName: 'Prenom',
-        width: 150,
+        field: 'description',
+        headerName: 'Description',
+        width: 250,
         editable: true,
         },
         {
-        field: 'nom',
-        headerName: 'Nom',
-        width: 150,
+        field: 'dateCreation',
+        headerName: 'Date de Creation',
+        width: 250,
         editable: true,
-        },
-        {
-        field: 'grade',
-        headerName: 'Grade',
-        width: 110,
-        editable: true,
-        },
-        {
-        field: 'specialite',
-        headerName: 'Specialite',
-        editable: true,
-        width: 160,
         },
         {
         field: 'btn1',
@@ -47,7 +33,11 @@ const Vacataires = () => {
         sortable: false,
         filterable: false,
         renderCell: row => (
-            <CButton color="primary" >
+            <CButton color="primary" onClick={() => {
+                getDetails(row.id);
+                setShow(true)
+                console.log(show);    
+            }} >
             details
             </CButton>
         )
@@ -62,7 +52,7 @@ const Vacataires = () => {
             onClick={() => {
                 setVisible(!visible); 
                 setIdSelected(row.id) 
-                getOneVacataire(row.id)
+                getOneRepartition(row.id)
             }} variant="outline">
             <CIcon icon={cilPencil} className="text-info"  />
             </CButton>
@@ -74,27 +64,25 @@ const Vacataires = () => {
         sortable:false,
         filterable: false,
         renderCell: row => (
-            <CButton   color="danger" onClick={()=>{deleteVacataires(row.id)}} variant="outline" >
+            <CButton   color="danger" onClick={()=>{deleteRepartition(row.id)}} variant="outline" >
                 <CIcon icon={cilTrash} className="text-danger" />
             </CButton>
         ),
         },
     ];
   useEffect(()=>{
-    getVacataires();
+    getRepartitions();
   },[]);
     
     const [rows, setRows] = useState([]);
-    const [vacataire, setVacataire] = useState(
+    const [rowdetail, setRowDetail] = useState([]);
+    const [repartition, setRepartition] = useState(
         {
-            prenom:"",
-            nom:"",
-            grade:"",
-            specialite:""}
-        );
+            description: ""
+        });
     
-    const getVacataires = () => {
-        fetch(SERVER_URL+"vacatairesrest")
+    const getRepartitions = () => {
+        fetch(SERVER_URL+"repartitionsrest")
             .then( answer=>{
                 if (answer.status===200) {
                     return answer.json();
@@ -111,8 +99,8 @@ const Vacataires = () => {
             .catch(err=>console.error(err));
     }
 
-    const getOneVacataire = (id) => {
-        fetch(SERVER_URL+`vacatairesrest/${id}`)
+    const getOneRepartition = (id) => {
+        fetch(SERVER_URL+`repartitionsrest/${id}`)
             .then( answer=>{
                 if (answer.status===200) {
                     return answer.json();
@@ -122,15 +110,15 @@ const Vacataires = () => {
             })
             .then( donne =>
               {
-                setVacataire(donne);
+                setRepartition(donne);
                 console.log(donne);
               }
             )
             .catch(err=>console.error(err));
     }
 
-    const creteVacataire = (vac) => {
-        fetch(SERVER_URL+`vacatairesrest/create`,{
+    const creteRepartition = (vac) => {
+        fetch(SERVER_URL+`repartitionsrest/create`,{
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(vac)
@@ -138,7 +126,7 @@ const Vacataires = () => {
         .then(response => {
             if (response.ok) {
                 setVisible1(false);
-                getVacataires();
+                getRepartitions();
                 alert("Votre ajout a ete un succes :)")
             } else {
                 alert("Un probleme est survenu lors de la creation !")
@@ -147,8 +135,8 @@ const Vacataires = () => {
         .catch(err => console.error(err))
     }
 
-    const editVacataire = (id,vac) => {
-        fetch(SERVER_URL+`vacatairesrest/edit/${id}`,{
+    const editRepartition = (id,vac) => {
+        fetch(SERVER_URL+`repartitionsrest/edit/${id}`,{
             method: "PUT",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(vac)
@@ -156,7 +144,7 @@ const Vacataires = () => {
         .then(response => {
             if (response.ok) {
                 setVisible(false)
-                getVacataires();
+                getRepartitions();
                 alert("Les données ont été modifié avec succes :)")
             } else {
                 alert("Un probleme est survenu lors de la modification !")
@@ -167,28 +155,28 @@ const Vacataires = () => {
 
     const handleChange = (e) => {
         const value = e.target.value;
-        setVacataire({
-          ...vacataire,
+        setRepartition({
+          ...repartition,
           [e.target.name]: value
         });
     }
 
     const handleChange1 = (e) => {
         const value = e.target.value;
-        setVacataire({
-          ...vacataire,
+        setRepartition({
+          ...repartition,
           [e.target.name]: value
         });
     }
 
-    const deleteVacataires = (id) => {
-        if (window.confirm("Etes vous sur de vouloir supprimer le vacataire ? :(")) {
-            fetch(SERVER_URL+`vacatairesrest/delete/${id}`,{
+    const deleteRepartition = (id) => {
+        if (window.confirm("Etes vous sur de vouloir supprimer le repartition ? :(")) {
+            fetch(SERVER_URL+`repartitionsrest/delete/${id}`,{
                 method: "DELETE"
             })
             .then(response => {
                 if (response.ok) {
-                    getVacataires();
+                    getRepartitions();
                 } else {
                     alert("Un probleme est survenu lors de la suppression !")
                 }
@@ -197,18 +185,37 @@ const Vacataires = () => {
         }
     }
 
+    const getDetails = (id) => {
+        fetch(SERVER_URL+`repartitionsrest/${id}/seances`,{
+            method: "GET"
+        })
+        .then( answer=>{
+            if (answer.status===200) {
+                return answer.json();
+            }else {
+                return null;
+            }
+        })
+        .then(data=>{
+                setRowDetail(data);
+        })
+        .catch(err=>console.error(err));
+    }
+
+
     return (
+    (show) ? ( <DetailRepartirions rowdetail={rowdetail} />) : (
       <div>
         <center>
-            <h3 className="mb-3 mt-2 title-grid">Listes des Vacataires</h3>
+            <h3 className="mb-3 mt-2 title-grid">Listes des Repartitions</h3>
         </center>
-        <CButton onClick={() => setVisible1(!visible1)} className='mb-3' color='success' style={{textAlign:'right'}}>
+        <CButton onClick={() => setVisible1(!visible1)} className='mb-3 btn-right' color='success'>
             <b><CIcon icon={cilPlus}/>Nouveau &nbsp;</b>
         </CButton>
         <Box sx={{ height: 500, width: '100%' }}>
             <DataGrid
             rows={rows}
-            getRowId={row=>row.id_Enseignant}
+            getRowId={row=>row.id_Repartition}
             columns={columns}
             initialState={{
                 pagination: {
@@ -220,7 +227,6 @@ const Vacataires = () => {
             pageSizeOptions={[5]}
             />
         </Box>
-        {/* Voici le modal qui gere la modification des vacataires */}
         <CModal
         alignment="center"
         scrollable
@@ -229,23 +235,18 @@ const Vacataires = () => {
         aria-labelledby="VerticallyCenteredScrollableExample"
         >
         <CModalHeader>
-            <CModalTitle id="ScrollingLongContentExampleLabel2" >Modifier un Vacataire</CModalTitle>
+            <CModalTitle id="ScrollingLongContentExampleLabel2" >Modifier un repartition</CModalTitle>
         </CModalHeader>
         <CModalBody>
-            <CFormInput type="text"  floatingClassName="mb-3" value={vacataire.prenom} name='prenom' floatingLabel="Prénom" placeholder="Prénom" onChange={handleChange} />
-            <CFormInput type="text"  floatingClassName="mb-3" value={vacataire.nom} name='nom' floatingLabel="Nom" placeholder="Nom" onChange={handleChange} />
-            <CFormInput type="text"  floatingClassName="mb-3" value={vacataire.grade} name='grade' floatingLabel="Grade" placeholder="Grade" onChange={handleChange} />
-            <CFormInput type="text"  floatingClassName="mb-3" value={vacataire.specialite} name='specialite' floatingLabel="Specialité" placeholder="Specialité" onChange={handleChange} />
+            <CFormInput type="text"  floatingClassName="mb-3" value={repartition.description} name='description' floatingLabel="Description" placeholder="Description" onChange={handleChange} />
         </CModalBody>
         <CModalFooter>
             <CButton color="secondary" onClick={() => setVisible(false)}>
             <CIcon icon={cilX} />Fermer
             </CButton>
-            <CButton color="primary" onClick={() => editVacataire(idSelected,vacataire)}><CIcon icon={cilSave} /> Enregistrer</CButton>
+            <CButton color="primary" onClick={() => editRepartition(idSelected,repartition)}><CIcon icon={cilSave} /> Enregistrer</CButton>
         </CModalFooter>
         </CModal>
-
-        {/* Voici le modal qui gere la creation des vacataires */}
         <CModal
         alignment="center"
         scrollable
@@ -254,25 +255,22 @@ const Vacataires = () => {
         aria-labelledby="VerticallyCenteredScrollableExample"
         >
         <CModalHeader>
-            <CModalTitle id="ScrollingLongContentExampleLabel2" >Créer un Vacataire</CModalTitle>
+            <CModalTitle id="ScrollingLongContentExampleLabel2" >Créer un repartition</CModalTitle>
         </CModalHeader>
         <CModalBody>
-            <CFormInput type="text"  floatingClassName="mb-3" name='prenom' floatingLabel="Prénom" placeholder="Prénom" onChange={handleChange1} />
-            <CFormInput type="text"  floatingClassName="mb-3" name='nom' floatingLabel="Nom" placeholder="Nom" onChange={handleChange1} />
-            <CFormInput type="text"  floatingClassName="mb-3" name='grade' floatingLabel="Grade" placeholder="Grade" onChange={handleChange1} />
-            <CFormInput type="text"  floatingClassName="mb-3" name='specialite' floatingLabel="Specialité" placeholder="Specialité" onChange={handleChange1} />
+            <CFormInput type="text"  floatingClassName="mb-3" name='description' floatingLabel="Description" placeholder="Description" onChange={handleChange1} />
         </CModalBody>
         <CModalFooter>
             <CButton color="secondary" onClick={() => setVisible1(false)}>
             <CIcon icon={cilX} />Fermer
             </CButton>
-            <CButton color="primary" onClick={()=> {creteVacataire(vacataire); setVisible1(false)}} >
+            <CButton color="primary" onClick={()=> {creteRepartition(repartition); setVisible1(false)}} >
                 <CIcon icon={cilSave} /> Ajouter
             </CButton>
         </CModalFooter>
         </CModal>
       </div>
-    );
+    ));
 };
 
-export default Vacataires;
+export default Repartitions;

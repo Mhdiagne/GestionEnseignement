@@ -1,4 +1,6 @@
 import React from 'react'
+import Repartitions from './components/tables/Repartitions'
+import Vacataires from './components/tables/Vacataire'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -56,6 +58,8 @@ const routes = [
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },
+  { path: '/dashboard/repartition', name: 'Repartition', element: Repartitions},
+  { path: '/dashboard/vacataire', name: 'Vacataire', element: Vacataires},
   // { path: '/base', name: 'Base', element: Cards, exact: true },
   // { path: '/base/accordion', name: 'Accordion', element: Accordion },
   // { path: '/base/breadcrumbs', name: 'Breadcrumbs', element: Breadcrumbs },
