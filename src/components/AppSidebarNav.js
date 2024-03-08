@@ -28,15 +28,16 @@ export const AppSidebarNav = ({ items }) => {
 
   const navItem = (item, index, indent = false) => {
     const { component, name, badge, icon, ...rest } = item
-    const Component = component
+    const Component = NavLink
     return (
       <Component
         {...(rest.to &&
           !rest.items && {
             component: NavLink,
-          })}
+        })}
         key={index}
         {...rest}
+        className= "nav-link"
       >
         {navLink(name, icon, badge, indent)}
       </Component>

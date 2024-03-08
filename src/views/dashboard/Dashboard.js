@@ -55,6 +55,8 @@ import WidgetsDropdown from '../widgets/WidgetsDropdown'
 import MainChart from './MainChart'
 import Vacataires from 'src/components/tables/Vacataire'
 import Repartitions from 'src/components/tables/Repartitions'
+import Seances from 'src/components/tables/Seances'
+import Pers from 'src/components/tables/Pers'
 
 const Dashboard = () => {
   // const progressExample = [
@@ -180,9 +182,11 @@ const Dashboard = () => {
 
   return (
     <>
+      <Pers />
+      <Seances />
+      <Vacataires />
       <Repartitions />
-      {/*<Vacataires />
-      <WidgetsDropdown className="mb-4" />
+            {/*<WidgetsDropdown className="mb-4" />
       <CCard className="mb-4">
         <CCardBody>
           <CRow>

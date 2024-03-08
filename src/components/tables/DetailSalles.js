@@ -4,9 +4,10 @@ import CIcon from '@coreui/icons-react';
 import { CButton } from '@coreui/react';
 import { Box } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+import { PropTypes } from 'prop-types';
 
-const detailRepartirions = (props) => {
-
+const DetailSalles = (props) => {
+    
     const columns = [
         { field: 'id_Seance', headerName: 'ID', width: 90 },
         {
@@ -77,11 +78,11 @@ const detailRepartirions = (props) => {
     return (
         <div>
             <div className='same-line'>
-                <CButton onClick={()=>window.location.reload()} color='secondary' className='m-2'>
+                <CButton href='/' color='secondary' className='m-2'>
                     <CIcon icon={cilArrowLeft}/>&nbsp;&nbsp;back
                 </CButton>
                 <center>
-                    <h3 className="mb-3 mt-2 title-grid">Listes des Seances d`une repartition</h3>
+                    <h3 className="mb-3 mt-2 title-grid">Listes des Seances d`une Salle</h3>
                 </center>
             </div>
             <Box sx={{ height: 500, width: '100%' }}>
@@ -103,4 +104,8 @@ const detailRepartirions = (props) => {
     );
 };
 
-export default detailRepartirions;
+DetailSalles.propTypes = {
+    rowdetail: PropTypes.object.isRequired, // Ajoutez cette ligne pour valider la prop rowdetail
+};
+
+export default DetailSalles;

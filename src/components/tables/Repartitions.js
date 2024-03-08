@@ -1,11 +1,11 @@
 import { cilPencil, cilPlus, cilSave, cilTrash, cilX } from '@coreui/icons';
 import CIcon from '@coreui/icons-react';
-import { CButton, CFormInput, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
+import { CButton, CFormInput, CFormSelect, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle } from '@coreui/react';
 import { Box } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import { SERVER_URL } from 'src/_constantes';
-import DetailRepartirions from './detailRepartirions';
+import DetailRepartirions from './DetailRepartirions';
 
 const Repartitions = () => {
 
@@ -13,6 +13,12 @@ const Repartitions = () => {
     const [visible1, setVisible1] = useState(false)
     const [idSelected, setIdSelected] = useState(0);
     const [show, setShow] = useState(false);
+    const [ensSelected, setEnsSelected] = useState({
+        id: 0,
+        prenom: "",
+        nom: "",
+        type: ""
+    });
     const columns = [
         { field: 'id_Repartition', headerName: 'ID', width: 90 },
         {
@@ -75,10 +81,23 @@ const Repartitions = () => {
   },[]);
     
     const [rows, setRows] = useState([]);
+    const [ensOption, setEnsOptions] = useState([
+        {
+            id: 0,
+            prenom: "",
+            nom: "",
+            type: ""
+        }
+    ]);
     const [rowdetail, setRowDetail] = useState([]);
     const [repartition, setRepartition] = useState(
         {
             description: ""
+        });
+    const [newRepartition, setNewRepartition] = useState(
+        {
+            description: "",
+            enseignant: {}
         });
     
     const getRepartitions = () => {
@@ -118,6 +137,7 @@ const Repartitions = () => {
     }
 
     const creteRepartition = (vac) => {
+        vac.enseignant = ensSelected;
         fetch(SERVER_URL+`repartitionsrest/create`,{
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -159,12 +179,14 @@ const Repartitions = () => {
           ...repartition,
           [e.target.name]: value
         });
+        setEnsSelected({[e.target.name]: value});
+        console.log(ensSelected);
     }
 
     const handleChange1 = (e) => {
         const value = e.target.value;
-        setRepartition({
-          ...repartition,
+        setNewRepartition({
+          ...newRepartition,
           [e.target.name]: value
         });
     }
@@ -202,16 +224,42 @@ const Repartitions = () => {
         .catch(err=>console.error(err));
     }
 
+    const getEnseignants = () => {
+        fetch(SERVER_URL+`enseignantsrest`,{
+            method: "GET"
+        })
+        .then( answer=>{
+            if (answer.status===200) {
+                return answer.json();
+            }else {
+                return null;
+            }
+        })
+        .then(data=>{
+            const donnes = data.map(opt=>{return {
+                id: opt.id_Enseignant,
+                prenom: opt.prenom,
+                nom: opt.nom,
+                type: opt.type
+        }})
+            setEnsOptions(donnes);
+            console.log(ensOption);
+        })
+        .catch(err=>console.error(err));
+    }
+
 
     return (
     (show) ? ( <DetailRepartirions rowdetail={rowdetail} />) : (
       <div>
-        <center>
-            <h3 className="mb-3 mt-2 title-grid">Listes des Repartitions</h3>
-        </center>
-        <CButton onClick={() => setVisible1(!visible1)} className='mb-3 btn-right' color='success'>
-            <b><CIcon icon={cilPlus}/>Nouveau &nbsp;</b>
-        </CButton>
+        <div className='same-line'>
+            <center>
+                <h3 className="mb-3 mt-2 title-grid">Listes des Repartitions</h3>
+            </center>
+            <CButton onClick={() => {setVisible1(!visible1); getEnseignants()}} className='mb-3 btn-right' color='success'>
+                <b><CIcon icon={cilPlus}/>Nouveau &nbsp;</b>
+            </CButton>
+        </div>
         <Box sx={{ height: 500, width: '100%' }}>
             <DataGrid
             rows={rows}
@@ -259,12 +307,15 @@ const Repartitions = () => {
         </CModalHeader>
         <CModalBody>
             <CFormInput type="text"  floatingClassName="mb-3" name='description' floatingLabel="Description" placeholder="Description" onChange={handleChange1} />
+            <CFormSelect aria-label="Default select example" options={ensOption.map(opt=>
+                opt.id+" "+opt.prenom+" "+opt.nom+" "+opt.type
+                )}  name='enseignant' onChange={handleChange}/>
         </CModalBody>
         <CModalFooter>
             <CButton color="secondary" onClick={() => setVisible1(false)}>
             <CIcon icon={cilX} />Fermer
             </CButton>
-            <CButton color="primary" onClick={()=> {creteRepartition(repartition); setVisible1(false)}} >
+            <CButton color="primary" onClick={()=> {creteRepartition(newRepartition); setVisible1(false)}} >
                 <CIcon icon={cilSave} /> Ajouter
             </CButton>
         </CModalFooter>

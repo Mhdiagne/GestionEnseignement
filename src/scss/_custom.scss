@@ -77,6 +77,39 @@ div.container-fluid:nth-child(2) {
     background-color: #1B9A76;
 }
 
-.MuiBox-root {
-    
+.same-line {
+    display: flex;
+    justify-content: space-between;
+}
+
+.same-line>center {
+    margin: 0 auto;
+}
+
+.simplebar-content>li>a {
+    cursor: pointer;
+}
+
+.simplebar-content>li>a:hover {
+
+}
+
+a.nav-link:hover {
+    opacity: 0.8;
+    background-color: #113f36 !important;
+    font-size: large;
+}
+
+a.nav-link.active {
+    opacity: 0.5;
+    background-color: #113f36 !important;
+    font-size: large;
+}
+
+.modal-header {
+    background-color: #2eb85c;
+}
+
+.modal-content {
+    border: 3px solid #2eb85c;
 }

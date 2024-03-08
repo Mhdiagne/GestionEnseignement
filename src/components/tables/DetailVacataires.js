@@ -4,40 +4,23 @@ import CIcon from '@coreui/icons-react';
 import { CButton } from '@coreui/react';
 import { Box } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+import PropTypes from 'prop-types';
 
-const detailRepartirions = (props) => {
+const DetailVacataires = (props) => {
 
     const columns = [
-        { field: 'id_Seance', headerName: 'ID', width: 90 },
+        { field: 'id_Repartition', headerName: 'ID', width: 90 },
         {
-        field: 'jour',
-        headerName: 'Jour',
-        width: 150,
-        editable: true,
-        },
-        {
-        field: 'duree',
-        headerName: 'Duree',
-        width: 150,
-        editable: true,
-        },
-        {
-        field: 'heureDebut',
-        headerName: 'Heure de Fin',
-        width: 150,
-        editable: true,
-        },
-        {
-        field: 'heureFin',
-        headerName: 'Heure de Fin',
-        width: 150,
-        editable: true,
-        },
-        {
-        field: 'dateCreation',
-        headerName: 'Date de Creation',
-        width: 250,
-        editable: true,
+            field: 'description',
+            headerName: 'Description',
+            width: 250,
+            editable: true,
+            },
+            {
+            field: 'dateCreation',
+            headerName: 'Date de Creation',
+            width: 250,
+            editable: true,
         },
         // {
         // field: 'btn1',
@@ -73,7 +56,7 @@ const detailRepartirions = (props) => {
         ),
         },
     ];
-
+    const rows=[{}];
     return (
         <div>
             <div className='same-line'>
@@ -81,13 +64,13 @@ const detailRepartirions = (props) => {
                     <CIcon icon={cilArrowLeft}/>&nbsp;&nbsp;back
                 </CButton>
                 <center>
-                    <h3 className="mb-3 mt-2 title-grid">Listes des Seances d`une repartition</h3>
+                    <h3 className="mb-3 mt-2 title-grid">Listes des Repartitions d&apos;un Enseignant</h3>
                 </center>
             </div>
             <Box sx={{ height: 500, width: '100%' }}>
                 <DataGrid
                 rows={props.rowdetail}
-                getRowId={row=>row.id_Seance}
+                getRowId={row=>row.id_Repartition}
                 columns={columns}
                 initialState={{
                     pagination: {
@@ -103,4 +86,8 @@ const detailRepartirions = (props) => {
     );
 };
 
-export default detailRepartirions;
+DetailVacataires.propTypes = {
+    rowdetail: PropTypes.object.isRequired, // Ajoutez cette ligne pour valider la prop rowdetail
+  };
+
+export default DetailVacataires;

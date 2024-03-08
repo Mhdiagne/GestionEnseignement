@@ -1,6 +1,12 @@
 import React from 'react'
-import Repartitions from './components/tables/Repartitions'
-import Vacataires from './components/tables/Vacataire'
+import Repartitions from './components/tables/Repartitions';
+import Vacataires from './components/tables/Vacataire';
+import Seances from './components/tables/Seances';
+import Pers from './components/tables/Pers';
+import Emplois from './components/tables/Emplois';
+import Batiments from './components/tables/Batiments';
+import Salles from './components/tables/Salles';
+import Deroulements from './components/tables/Deroulements';
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -53,15 +59,16 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
+  // { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
-  { path: '/theme', name: 'Theme', element: Colors, exact: true },
-  { path: '/theme/colors', name: 'Colors', element: Colors },
-  { path: '/theme/typography', name: 'Typography', element: Typography },
-  { path: '/dashboard/repartition', name: 'Repartition', element: Repartitions},
-  { path: '/dashboard/vacataire', name: 'Vacataire', element: Vacataires},
-  // { path: '/base', name: 'Base', element: Cards, exact: true },
-  // { path: '/base/accordion', name: 'Accordion', element: Accordion },
+  { path: '/dashboard/batiments', name: 'Batiments', element: Batiments},
+  { path: '/dashboard/emplois', name: 'Emploi', element: Emplois },
+  { path: '/dashboard/pers', name: 'Per', element: Pers },
+  { path: '/dashboard/repartitions', name: 'Repartition', element: Repartitions},
+  { path: '/dashboard/vacataires', name: 'Vacataire', element: Vacataires},
+  { path: '/dashboard/seances', name: 'Seance', element: Seances },
+  { path: '/dashboard/salles', name: 'Salle', element: Salles },
+  { path: '/dashboard/deroulements', name: 'Deroulement', element: Deroulements },
   // { path: '/base/breadcrumbs', name: 'Breadcrumbs', element: Breadcrumbs },
   // { path: '/base/cards', name: 'Cards', element: Cards },
   // { path: '/base/carousels', name: 'Carousel', element: Carousels },
@@ -98,7 +105,7 @@ const routes = [
   // { path: '/notifications/badges', name: 'Badges', element: Badges },
   // { path: '/notifications/modals', name: 'Modals', element: Modals },
   // { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
-  { path: '/widgets', name: 'Widgets', element: Widgets },
+  //{ path: '/widgets', name: 'Widgets', element: Widgets },
 ]
 
 export default routes

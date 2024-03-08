@@ -8,6 +8,7 @@ import { Box } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import { SERVER_URL } from 'src/_constantes';
+import DetailVacataires from './DetailVacataires';
 
 
 const Vacataires = () => {
@@ -15,6 +16,8 @@ const Vacataires = () => {
     const [visible, setVisible] = useState(false)
     const [visible1, setVisible1] = useState(false)
     const [idSelected, setIdSelected] = useState(0);
+    const [show, setShow] = useState(false);
+    const [rowdetail, setRowDetail] = useState([]);
     const columns = [
         { field: 'id_Enseignant', headerName: 'ID', width: 90 },
         {
@@ -47,7 +50,7 @@ const Vacataires = () => {
         sortable: false,
         filterable: false,
         renderCell: row => (
-            <CButton color="primary" >
+            <CButton color="primary" onClick={()=>{getDetails(row.id); setShow(true)}} >
             details
             </CButton>
         )
@@ -80,13 +83,22 @@ const Vacataires = () => {
         ),
         },
     ];
-  useEffect(()=>{
-    getVacataires();
-  },[]);
+    
+    useEffect(()=>{
+        getVacataires();
+    },[]);
     
     const [rows, setRows] = useState([]);
     const [vacataire, setVacataire] = useState(
         {
+            prenom:"",
+            nom:"",
+            grade:"",
+            specialite:""}
+        );
+    const [newVacataire, setNewVacataire] = useState(
+        {
+            type: "VAC",
             prenom:"",
             nom:"",
             grade:"",
@@ -175,8 +187,8 @@ const Vacataires = () => {
 
     const handleChange1 = (e) => {
         const value = e.target.value;
-        setVacataire({
-          ...vacataire,
+        setNewVacataire({
+          ...newVacataire,
           [e.target.name]: value
         });
     }
@@ -197,14 +209,34 @@ const Vacataires = () => {
         }
     }
 
+    const getDetails = (id) => {
+        fetch(SERVER_URL+`vacatairesrest/${id}/repartitions`,{
+            method: "GET"
+        })
+        .then( answer=>{
+            if (answer.status===200) {
+                return answer.json();
+            }else {
+                return null;
+            }
+        })
+        .then(data=>{
+                setRowDetail(data);
+        })
+        .catch(err=>console.error(err));
+    }
+
     return (
+    (show) ? ( <DetailVacataires rowdetail={rowdetail} />) : (
       <div>
-        <center>
-            <h3 className="mb-3 mt-2 title-grid">Listes des Vacataires</h3>
-        </center>
-        <CButton onClick={() => setVisible1(!visible1)} className='mb-3' color='success' style={{textAlign:'right'}}>
-            <b><CIcon icon={cilPlus}/>Nouveau &nbsp;</b>
-        </CButton>
+        <div className='same-line'>
+            <center>
+                <h3 className="mb-3 mt-2 title-grid">Listes des Vacataires</h3>
+            </center>
+            <CButton onClick={() => setVisible1(!visible1)} className='mb-3' color='success' style={{textAlign:'right'}}>
+                <b><CIcon icon={cilPlus}/>Nouveau &nbsp;</b>
+            </CButton>
+        </div>
         <Box sx={{ height: 500, width: '100%' }}>
             <DataGrid
             rows={rows}
@@ -266,13 +298,13 @@ const Vacataires = () => {
             <CButton color="secondary" onClick={() => setVisible1(false)}>
             <CIcon icon={cilX} />Fermer
             </CButton>
-            <CButton color="primary" onClick={()=> {creteVacataire(vacataire); setVisible1(false)}} >
+            <CButton color="primary" onClick={()=> {creteVacataire(newVacataire); setVisible1(false)}} >
                 <CIcon icon={cilSave} /> Ajouter
             </CButton>
         </CModalFooter>
         </CModal>
       </div>
-    );
+    ));
 };
 
 export default Vacataires;
