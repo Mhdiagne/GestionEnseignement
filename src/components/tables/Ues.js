@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { SERVER_URL } from 'src/_constantes';
 //import DetailRepartirions from './DetailRepartirions';
 import DetailUes_EC from './DetailUes_EC';
+import DetailUes_Module from './DetailUes_Module';
 
 const Ues = () => {
         const [visible, setVisible] = useState(false)
@@ -60,6 +61,7 @@ const Ues = () => {
                 renderCell: row => (
                     <CButton color="primary" onClick={() => {
                         getDetails(row.id);
+                        getDetails1(row.id);
                         setShow(true)
                         console.log(show);
                     }} >
@@ -101,6 +103,7 @@ const Ues = () => {
 
         const [rows, setRows] = useState([]);
         const [rowdetail, setRowDetail] = useState([]);
+        const [rowdetail1, setRowDetail1] = useState([]);
         const [newUe, setNewUes] = useState(
             {
                 libelle: "",
@@ -242,10 +245,32 @@ const Ues = () => {
             })
             .catch(err=>console.error(err));
         }
+        const getDetails1 = (id) => {
+            fetch(SERVER_URL+`maquette/ue/${id}/modules`,{
+                method: "GET"
+            })
+            .then( answer=>{
+                if (answer.status===200) {
+                    return answer.json();
+                }else {
+                    return null;
+                }
+            })
+            .then(data=>{
+                    setRowDetail1(data);
+            })
+            .catch(err=>console.error(err));
+        }
 
 
         return (
-        (show) ? ( <DetailUes_EC rowdetail={rowdetail} />) : (
+        (show) ?
+            ( <>
+                <DetailUes_EC rowdetail={rowdetail} />
+                <DetailUes_Module rowdetail={rowdetail1} />
+              </>
+            ) :
+            (
             <div>
             <div className='same-line'>
                 <center>

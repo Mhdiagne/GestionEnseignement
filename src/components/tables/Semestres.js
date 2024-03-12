@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { SERVER_URL } from 'src/_constantes';
 //import DetailRepartirions from './DetailRepartirions';
 import DetailSemestre_Module from './DetailSemestre_Module';
+import DetailSemestre_Classe from './DetailSemestre_Classe';
 
 const Semestres = () => {
         const [visible, setVisible] = useState(false)
@@ -42,6 +43,7 @@ const Semestres = () => {
                 renderCell: row => (
                     <CButton color="primary" onClick={() => {
                         getDetails(row.id);
+                        getDetails1(row.id);
                         setShow(true)
                         console.log(show);
                     }} >
@@ -83,6 +85,7 @@ const Semestres = () => {
 
         const [rows, setRows] = useState([]);
         const [rowdetail, setRowDetail] = useState([]);
+        const [rowdetail1, setRowDetail1] = useState([]);
         const [newSemestre, setNewSemestre] = useState(
             {
                 libelle: "",
@@ -216,10 +219,33 @@ const Semestres = () => {
             })
             .catch(err=>console.error(err));
         }
+        const getDetails1 = (id) => {
+            fetch(SERVER_URL+`maquette/semestre/${id}/classes`,{
+                method: "GET"
+            })
+            .then( answer=>{
+                if (answer.status===200) {
+                    return answer.json();
+                }else {
+                    return null;
+                }
+            })
+            .then(data=>{
+                    setRowDetail1(data);
+            })
+            .catch(err=>console.error(err));
+        }
 
 
         return (
-        (show) ? ( <DetailSemestre_Module rowdetail={rowdetail} />) : (
+        (show) ?
+        ( <>
+            <DetailSemestre_Module rowdetail={rowdetail} />
+            <DetailSemestre_Classe rowdetail={rowdetail1} />
+          </>
+        ) :
+
+        (
             <div>
             <div className='same-line'>
                 <center>
