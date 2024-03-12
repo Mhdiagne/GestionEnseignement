@@ -7,6 +7,18 @@ import Emplois from './components/tables/Emplois';
 import Batiments from './components/tables/Batiments';
 import Salles from './components/tables/Salles';
 import Deroulements from './components/tables/Deroulements';
+import Ues from './components/tables/Ues';
+import Classes from './components/tables/Classes';
+import Cycles from './components/tables/Cycles';
+import Ecs from './components/tables/Ecs';
+import Filieres from './components/tables/Filieres';
+import Formations from './components/tables/Formations';
+import Enseignements from './components/tables/Enseignements';
+import Niveaux from './components/tables/Niveaux';
+import Maquettes from './components/tables/Maquettes';
+import Semestres from './components/tables/Semestres';
+import Groupes from './components/tables/Groupes';
+import Modules from './components/tables/Modules';
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -69,18 +81,18 @@ const routes = [
   { path: '/dashboard/seances', name: 'Seance', element: Seances },
   { path: '/dashboard/salles', name: 'Salle', element: Salles },
   { path: '/dashboard/deroulements', name: 'Deroulement', element: Deroulements },
-  // { path: '/base/breadcrumbs', name: 'Breadcrumbs', element: Breadcrumbs },
-  // { path: '/base/cards', name: 'Cards', element: Cards },
-  // { path: '/base/carousels', name: 'Carousel', element: Carousels },
-  // { path: '/base/collapses', name: 'Collapse', element: Collapses },
-  // { path: '/base/list-groups', name: 'List Groups', element: ListGroups },
-  // { path: '/base/navs', name: 'Navs', element: Navs },
-  // { path: '/base/paginations', name: 'Paginations', element: Paginations },
-  // { path: '/base/placeholders', name: 'Placeholders', element: Placeholders },
-  // { path: '/base/popovers', name: 'Popovers', element: Popovers },
-  // { path: '/base/progress', name: 'Progress', element: Progress },
-  // { path: '/base/spinners', name: 'Spinners', element: Spinners },
-  // { path: '/base/tables', name: 'Tables', element: Tables },
+  { path: '/dashboard/classes', name: 'Classe', element: Classes },
+  { path: '/dashboard/cycles', name: 'Cycle', element: Cycles },
+  { path: '/dashboard/ues', name: 'Ue', element: Ues },
+  { path: '/dashboard/ecs', name: 'Ec', element: Ecs },
+  { path: '/dashboard/formations', name: 'Formation', element: Formations },
+  { path: '/dashboard/filieres', name: 'Filiere', element: Filieres },
+  { path: '/dashboard/semestres', name: 'Semestre', element: Semestres },
+  { path: '/dashboard/maquettes', name: 'Maquette', element: Maquettes },
+  { path: '/dashboard/enseignements', name: 'Enseignement', element: Enseignements },
+  { path: '/dashboard/groupes', name: 'Groupe', element: Groupes },
+  { path: '/dashboard/modules', name: 'Module', element: Modules },
+  { path: '//dashboard/niveaux', name: 'Niveau', element: Niveaux },
   // { path: '/base/tooltips', name: 'Tooltips', element: Tooltips },
   // { path: '/buttons', name: 'Buttons', element: Buttons, exact: true },
   // { path: '/buttons/buttons', name: 'Buttons', element: Buttons },

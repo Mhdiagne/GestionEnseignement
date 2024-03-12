@@ -1,6 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classNames from 'classnames'
+import {
+  CCardTitle,
+  CCardImage,
+  CCardText,
 
+
+   } from '@coreui/react'
 import {
   CAvatar,
   CButton,
@@ -179,9 +185,41 @@ const Dashboard = () => {
   //     activity: 'Last week',
   //   },
   // ]
-
+  const [isHovered, setIsHovered] = useState(false);
   return (
     <>
+    <div className="d-flex">
+    <CCard
+    style={{ width: '18rem', height:'20rem' }}
+    className="mx-2"
+    onMouseEnter={() => setIsHovered(true)}
+    onMouseLeave={() => setIsHovered(false)}
+    >
+      <CCardImage orientation="top" src={"src/assets/images/react.jpg"} style={{height:'8rem'}}/>
+      <CCardBody>
+        <CCardTitle>Card title</CCardTitle>
+        <CCardText style={{height:'5rem'}}>
+          Some quick example text to build on the card title and make up the bulk of the card`s content.
+        </CCardText>
+        <CButton href="/dashboard/repartitions#/dashboard/repartitions" style={{ backgroundColor: 'blue', color: 'white' }}>Go somewhere</CButton>
+      </CCardBody>
+    </CCard>
+    <CCard
+    style={{ width: '18rem' }}
+    className="mx-2"
+    onMouseEnter={() => setIsHovered(true)}
+    onMouseLeave={() => setIsHovered(false)}
+    >
+      <CCardImage orientation="top" src={"src/assets/images/react.jpg"} />
+      <CCardBody>
+        <CCardTitle>Card title</CCardTitle>
+        <CCardText>
+          Some quick example text to build on the card title and make up the bulk of the card`s content.
+        </CCardText>
+        <CButton style={{ backgroundColor: 'blue', color: 'white' }} href="/dashboard/repartitions#/dashboard/pers">Go somewhere</CButton>
+      </CCardBody>
+    </CCard>
+    </div>
       <Pers />
       <Seances />
       <Vacataires />

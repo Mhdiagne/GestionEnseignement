@@ -1,0 +1,140 @@
+import React from 'react';
+import { cilArrowLeft, cilPencil, cilTrash } from '@coreui/icons';
+import CIcon from '@coreui/icons-react';
+import { CButton } from '@coreui/react';
+import { Box } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+import { PropTypes } from 'prop-types';
+
+const DetailUes_EC = (props) => {
+        const columns = [
+        { field: 'idEC', headerName: 'ID', width: 50 },
+        {
+        field: 'libelle',
+        headerName: 'Libelle',
+        width: 100,
+        editable: true,
+        },
+        {
+        field: 'code',
+        headerName: 'Code',
+        width: 100,
+        editable: true,
+        },
+        {
+        field: 'description',
+        headerName: 'Description',
+        width: 110,
+        editable: true,
+        },
+        {
+        field: 'cm',
+        headerName: 'CM',
+        editable: true,
+        width: 50,
+        },
+        {
+        field: 'td',
+        headerName: 'TD',
+        editable: true,
+        width: 50,
+        },
+        {
+        field: 'tp',
+        headerName: 'TP',
+        editable: true,
+        width: 50,
+        },
+        {
+        field: 'tpe',
+        headerName: 'TPE',
+        editable: true,
+        width: 50,
+        },
+        {
+        field: 'cumulcmtdtp',
+        headerName: 'Cumul Credit',
+        editable: true,
+        width: 50,
+        },
+        {
+        field: 'coefficient',
+        headerName: 'Coefficient',
+        editable: true,
+        width: 50,
+        },
+        {
+        field: 'volumeht',
+        headerName: 'Volume Horaire',
+        editable: true,
+        width: 50,
+        },
+        // {
+        // field: 'btn1',
+        // headerName: "",
+        // sortable: false,
+        // filterable: false,
+        // renderCell: row => (
+        //     <CButton color="primary" >
+        //     details
+        //     </CButton>
+        // )
+        // },
+        {
+        field: 'btn2',
+        headerName: "",
+        sortable: false,
+        filterable: false,
+        renderCell: row => (
+            <CButton color="info" variant="outline">
+            <CIcon icon={cilPencil} className="text-info"  />
+            </CButton>
+        )
+        },
+        {
+        field: 'btn3',
+        headerName: "",
+        sortable:false,
+        filterable: false,
+        renderCell: row => (
+            <CButton   color="danger" variant="outline" >
+                <CIcon icon={cilTrash} className="text-danger" />
+            </CButton>
+        ),
+        },
+    ];
+
+        return (
+            <div>
+                <div className='same-line'>
+                    <CButton onClick={()=>window.location.reload()} color='secondary' className='m-2'>
+                        <CIcon icon={cilArrowLeft}/>&nbsp;&nbsp;back
+                    </CButton>
+                    <center>
+                        <h3 className="mb-3 mt-2 title-grid">Listes des ECs de l`UE</h3>
+                    </center>
+                </div>
+                <Box sx={{ height: 500, width: '100%' }}>
+                    <DataGrid
+                    rows={props.rowdetail}
+                    getRowId={row=>row.idEC}
+                    columns={columns}
+                    initialState={{
+                        pagination: {
+                        paginationModel: {
+                            pageSize: 6,
+                        },
+                        },
+                    }}
+                    pageSizeOptions={[5]}
+                    />
+                </Box>
+            </div>
+        );
+    };
+
+    DetailUes_EC.propTypes = {
+        rowdetail: PropTypes.object.isRequired, // Ajoutez cette ligne pour valider la prop rowdetail
+    };
+
+export default DetailUes_EC;

@@ -74,6 +74,82 @@ const _nav = [
     to: '/dashboard/emplois',
     icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
   },
+  {
+    component: CNavTitle,
+    name: 'Maquette',
+  },
+  {
+    component: CNavItem,
+    name: 'Classes',
+    to: '/dashboard/classes',
+    icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Cycles',
+    to: '/dashboard/cycles',
+    icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Elements Constitutifs d\'UE',
+    to: '/dashboard/ecs',
+    icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Enseignements',
+    to: '/dashboard/enseignements',
+    icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Filieres',
+    to: '/dashboard/filieres',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Formations',
+    to: '/dashboard/formations',
+    icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Groupes',
+    to: '/dashboard/groupes',
+    icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Maquettes',
+    to: '/dashboard/maquettes',
+    icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Modules',
+    to: '/dashboard/modules',
+    icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Niveaux',
+    to: '/dashboard/niveaux',
+    icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Semestres',
+    to: '/dashboard/semestres',
+    icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Unites D\'enseignements',
+    to: '/dashboard/ues',
+    icon: <CIcon icon={cilAmericanFootball} customClassName="nav-icon" />,
+  }
   // {
   //   component: CNavItem,
   //   name: 'Dashboard',
