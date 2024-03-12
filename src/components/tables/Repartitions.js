@@ -19,6 +19,55 @@ const Repartitions = () => {
         nom: "",
         type: ""
     });
+
+    const [rows, setRows] = useState([]);
+    const [ensOption, setEnsOptions] = useState([
+        {
+            id_Enseignant: 0,
+            prenom: "",
+            nom: "",
+            type: ""
+        }
+    ]);
+    const [rowdetail, setRowDetail] = useState([]);
+    const [repartition, setRepartition] = useState(
+        {
+            description: "",
+            enseignant: {
+                id_Enseignant: 0,
+                prenom: "",
+                nom: "",
+                type: ""
+            },
+            enseignement: {
+                idEnseignement: 0,
+                libelle: "",
+                description: ""
+            }
+        });
+    const [newRepartition, setNewRepartition] = useState(
+        {
+            description: "",
+            enseignant: {
+                id_Enseignant: 0,
+                prenom: "",
+                nom: "",
+                type: ""
+            },
+            enseignement: {
+                idEnseignement: 0,
+                libelle: "",
+                description: ""
+            }
+        });
+    const [otherOption, setOtherOption] = useState([
+        {
+            idEnseignement: 0,
+            libelle: "",
+            description: ""
+        }
+    ]);
+    
     const columns = [
         { field: 'id_Repartition', headerName: 'ID', width: 90 },
         {
@@ -56,9 +105,13 @@ const Repartitions = () => {
         renderCell: row => (
             <CButton color="info" 
             onClick={() => {
+                setIdSelected(row.id); 
+                getOneRepartition(row.id);
+                getEnseignants();
+                getEnseignements();
                 setVisible(!visible); 
-                setIdSelected(row.id) 
-                getOneRepartition(row.id)
+                console.log(ensOption); // Affiche le premier objet de ensOption
+                console.log(repartition.enseignant);
             }} variant="outline">
             <CIcon icon={cilPencil} className="text-info"  />
             </CButton>
@@ -80,26 +133,7 @@ const Repartitions = () => {
     getRepartitions();
   },[]);
     
-    const [rows, setRows] = useState([]);
-    const [ensOption, setEnsOptions] = useState([
-        {
-            id: 0,
-            prenom: "",
-            nom: "",
-            type: ""
-        }
-    ]);
-    const [rowdetail, setRowDetail] = useState([]);
-    const [repartition, setRepartition] = useState(
-        {
-            description: ""
-        });
-    const [newRepartition, setNewRepartition] = useState(
-        {
-            description: "",
-            enseignant: {}
-        });
-    
+
     const getRepartitions = () => {
         fetch(SERVER_URL+"repartitionsrest")
             .then( answer=>{
@@ -130,14 +164,14 @@ const Repartitions = () => {
             .then( donne =>
               {
                 setRepartition(donne);
-                console.log(donne);
+                setEnsSelected(donne.enseignant);
+                console.log(repartition);
               }
             )
             .catch(err=>console.error(err));
     }
 
     const creteRepartition = (vac) => {
-        vac.enseignant = ensSelected;
         fetch(SERVER_URL+`repartitionsrest/create`,{
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -173,22 +207,88 @@ const Repartitions = () => {
         .catch(err => console.error(err))
     }
 
-    const handleChange = (e) => {
-        const value = e.target.value;
-        setRepartition({
-          ...repartition,
-          [e.target.name]: value
-        });
-        setEnsSelected({[e.target.name]: value});
-        console.log(ensSelected);
-    }
+    // const handleChange = (e) => {
+    //     const value = e.target.value;
+    //     setRepartition({
+    //       ...repartition,
+    //       [e.target.name]: value
+    //     });
+    //     setEnsSelected({[e.target.name]: value});
+    //     console.log(ensSelected);
+    // }
 
     const handleChange1 = (e) => {
-        const value = e.target.value;
-        setNewRepartition({
-          ...newRepartition,
-          [e.target.name]: value
-        });
+        const { name, value } = e.target;
+
+        // Si le champ sélectionné est 'enseignant'
+        if (name === 'enseignant') {
+            const [id, prenom, nom, type] = value.split(' ');
+            setNewRepartition(prevState => ({
+                ...prevState,
+                enseignant: {
+                    id_Enseignant: parseInt(id), // Convertissez l'ID en nombre entier si nécessaire
+                    prenom: prenom,
+                    nom: nom,
+                    type: type
+                }
+            }));
+        } 
+        // Si le champ sélectionné est 'enseignement'
+        else if (name === 'enseignement') {
+            const [idEnseignement, libelle, description] = value.split(' ');
+            setNewRepartition(prevState => ({
+                ...prevState,
+                enseignement: {
+                    idEnseignement: parseInt(idEnseignement), // Convertissez l'ID en nombre entier si nécessaire
+                    libelle: libelle,
+                    description: description
+                }
+            }));
+        } 
+        // Pour d'autres champs, mettez à jour normalement
+        else {
+            setNewRepartition(prevState => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        // Si le champ sélectionné est 'enseignant'
+        if (name === 'enseignant') {
+            const [id, prenom, nom, type] = value.split(' ');
+            setRepartition(prevState => ({
+                ...prevState,
+                enseignant: {
+                    id_Enseignant: parseInt(id), // Convertissez l'ID en nombre entier si nécessaire
+                    prenom: prenom,
+                    nom: nom,
+                    type: type
+                }
+            }));
+        } 
+        // Si le champ sélectionné est 'enseignement'
+        else if (name === 'enseignement') {
+            const [idEnseignement, libelle, description] = value.split(' ');
+            setRepartition(prevState => ({
+                ...prevState,
+                enseignement: {
+                    idEnseignement: parseInt(idEnseignement), // Convertissez l'ID en nombre entier si nécessaire
+                    libelle: libelle,
+                    description: description
+                }
+            }));
+        } 
+        // Pour d'autres champs, mettez à jour normalement
+        else {
+            setRepartition(prevState => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
     }
 
     const deleteRepartition = (id) => {
@@ -237,13 +337,36 @@ const Repartitions = () => {
         })
         .then(data=>{
             const donnes = data.map(opt=>{return {
-                id: opt.id_Enseignant,
+                id_Enseignant: opt.id_Enseignant,
                 prenom: opt.prenom,
                 nom: opt.nom,
                 type: opt.type
         }})
             setEnsOptions(donnes);
             console.log(ensOption);
+        })
+        .catch(err=>console.error(err));
+    }
+
+    const getEnseignements = () => {
+        fetch(SERVER_URL+`maquette/enseignements`,{
+            method: "GET"
+        })
+        .then( answer=>{
+            if (answer.status===200) {
+                return answer.json();
+            }else {
+                return null;
+            }
+        })
+        .then(data=>{
+            const donnes = data.map(opt=>{return {
+                idEnseignement: opt.idEnseignement,
+                libelle: opt.libelle,
+                description: opt.description,
+        }})
+            setOtherOption(donnes);
+            console.log(otherOption);
         })
         .catch(err=>console.error(err));
     }
@@ -256,7 +379,7 @@ const Repartitions = () => {
             <center>
                 <h3 className="mb-3 mt-2 title-grid">Listes des Repartitions</h3>
             </center>
-            <CButton onClick={() => {setVisible1(!visible1); getEnseignants()}} className='mb-3 btn-right' color='success'>
+            <CButton onClick={() => {setVisible1(!visible1); getEnseignants(); getEnseignements();}} className='mb-3 btn-right' color='success'>
                 <b><CIcon icon={cilPlus}/>Nouveau &nbsp;</b>
             </CButton>
         </div>
@@ -287,10 +410,16 @@ const Repartitions = () => {
         </CModalHeader>
         <CModalBody>
             <CFormInput type="text"  floatingClassName="mb-3" value={repartition.description} name='description' floatingLabel="Description" placeholder="Description" onChange={handleChange} />
+            <CFormSelect aria-label="Default select example" className="mb-3" options={ensOption.map(opt=>
+                opt.id_Enseignant+" "+opt.prenom+" "+opt.nom+" "+opt.type
+                )}  name='enseignant' value={`${repartition.enseignant.id_Enseignant} ${repartition.enseignant.prenom} ${repartition.enseignant.nom} ${repartition.enseignant.type}`} onChange={handleChange}/>
+            <CFormSelect aria-label="Default select example" className="mb-3" options={otherOption.map(opt=>
+                opt.idEnseignement+" "+opt.libelle
+                )}  name='enseignement' value={`${repartition.enseignement.idEnseignement} ${repartition.enseignement.libelle}`}  onChange={handleChange}/>
         </CModalBody>
         <CModalFooter>
             <CButton color="secondary" onClick={() => setVisible(false)}>
-            <CIcon icon={cilX} />Fermer
+                <CIcon icon={cilX} />Fermer
             </CButton>
             <CButton color="primary" onClick={() => editRepartition(idSelected,repartition)}><CIcon icon={cilSave} /> Enregistrer</CButton>
         </CModalFooter>
@@ -307,9 +436,12 @@ const Repartitions = () => {
         </CModalHeader>
         <CModalBody>
             <CFormInput type="text"  floatingClassName="mb-3" name='description' floatingLabel="Description" placeholder="Description" onChange={handleChange1} />
-            <CFormSelect aria-label="Default select example" options={ensOption.map(opt=>
-                opt.id+" "+opt.prenom+" "+opt.nom+" "+opt.type
-                )}  name='enseignant' onChange={handleChange}/>
+            <CFormSelect aria-label="Default select example" className="mb-3" options={ensOption.map(opt=>
+                opt.id_Enseignant+" "+opt.prenom+" "+opt.nom+" "+opt.type
+                )}  name='enseignant' onChange={handleChange1}/>
+            <CFormSelect aria-label="Default select example" className="mb-3" options={otherOption.map(opt=>
+                opt.idEnseignement+" "+opt.libelle
+                )}  name='enseignement' onChange={handleChange1}/>
         </CModalBody>
         <CModalFooter>
             <CButton color="secondary" onClick={() => setVisible1(false)}>
