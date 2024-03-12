@@ -89,7 +89,7 @@ const Classe = () => {
         const [rowdetail, setRowDetail] = useState([]);
         const [rowdetail0, setRowDetail0] = useState([]);
         const [rowdetail1, setRowDetail1] = useState([]);
-        const [renduDetail, setRenduDetail] = useState("detail1");
+        const [renduDetail, setRenduDetail] = useState("detail0");
         const [newClasse, setNewClasse] = useState(
             {
                 libelle: "",
@@ -259,12 +259,12 @@ const Classe = () => {
 
         return (
         (show) ?
-        ( <>
-            ({renduDetail==="detail0"}) ? (<DetailClasses_Groupe rowdetail={rowdetail} />) :
-            ({renduDetail==="detail1"}) ?
-            (<DetailClasses_Formation rowdetail={rowdetail0} /> ) :
-            (<DetailClasses_Enseignement rowdetail={rowdetail1} />)
-          </>
+        ( 
+            <>
+                <DetailClasses_Groupe rowdetail={rowdetail} />
+                <DetailClasses_Formation  rowdetail={rowdetail0} />
+                <DetailClasses_Enseignement  rowdetail={rowdetail1} />
+            </>
         ) : (
             <div>
             <div className='same-line'>
